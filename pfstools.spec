@@ -28,7 +28,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 pfstools package is a set of command line (and one GUI) programs for
 reading, writing, manipulating and viewing high-dynamic range (HDR)
 images and video frames. All programs in the package exchange data
-using unix pipes and a simple generic HDR image format (pfs). The
+using Unix pipes and a simple generic HDR image format (pfs). The
 concept of the pfstools is similar to netpbm package for low-dynamic
 range images.
 
