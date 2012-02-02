@@ -10,9 +10,9 @@ Version:	1.6.2
 Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
 # Source0-md5:	6c39c0bfb72ff59787f4ed4396272297
-URL:		http://www.mpi-inf.mpg.de/resources/pfstools/
+URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-glut-devel
@@ -44,7 +44,7 @@ obrazów o niskim zakresie dynamiki.
 Summary:	Header files for pfstools
 Summary(pl.UTF-8):	Pliki nagłówkowe pfstools
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 The header files are only needed for development of programs using the
@@ -58,7 +58,7 @@ programistów używających bibliotek pfstools.
 Summary:	Static pfstools libraries
 Summary(pl.UTF-8):	Biblioteki statyczne pfstools
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static pfstools libraries.
@@ -96,7 +96,8 @@ Pakiet zawiera narzędzia pfstools.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
