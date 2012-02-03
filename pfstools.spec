@@ -1,8 +1,6 @@
 #
 # TODO:
-# - jpeghdr
-# - gdal
-# - octave
+# - jpeghdr (libjpeghdr doesn't seem to be freely available; was attached to some book?)
 # - split progs package by libraries required
 #
 Summary:	pfstools for High Dynamic Range Images and Video
@@ -10,7 +8,7 @@ Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
 Version:	1.8.5
 Release:	1
-License:	LGPL
+License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
 # Source0-md5:	80dac70bfb6359a6749453477e74b112
@@ -22,11 +20,16 @@ BuildRequires:	OpenGL-glut-devel
 BuildRequires:	QtGui-devel >= 4
 BuildRequires:	autoconf >= 2.59-9
 BuildRequires:	automake
+BuildRequires:	gdal-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:2.0
 BuildRequires:	netpbm-devel
+BuildRequires:	octave-devel
 BuildRequires:	qt4-build >= 4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		octave_m_dir	%(octave-config --m-site-dir)
+%define		octave_oct_dir	%(octave-config --oct-site-dir)
 
 %description
 pfstools package is a set of command line (and one GUI) programs for
@@ -74,12 +77,25 @@ Biblioteki statyczne pfstools.
 Summary:	pfstools utility programs
 Summary(pl.UTF-8):	Narzędzia pfstools
 Group:		Applications/Graphics
+Requires:	%{name} = %{version}-%{release}
 
 %description progs
 This package contains pfstools utility programs.
 
 %description progs -l pl.UTF-8
 Pakiet zawiera narzędzia pfstools.
+
+%package -n octave-pfstools
+Summary:	Octave bindings for pfstools
+Summary(pl.UTF-8):	Wiązania języka Octave do pfstools
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+
+%description -n octave-pfstools
+Octave bindings for pfstools.
+
+%description -n octave-pfstools -l pl.UTF-8
+Wiązania języka Octave do pfstools.
 
 %prep
 %setup -q
@@ -93,7 +109,6 @@ Pakiet zawiera narzędzia pfstools.
 
 %configure \
 	--disable-matlab \
-	--disable-octave \
 	%{?debug:--enable-debug}
 
 %{__make}
@@ -134,3 +149,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pfs*
 %{_datadir}/pfstools
 %{_mandir}/man1/pfs*.1*
+
+%files -n octave-pfstools
+%defattr(644,root,root,755)
+%dir %{octave_oct_dir}/pfstools
+%attr(755,root,root) %{octave_oct_dir}/pfstools/pfs*.oct
+%{octave_m_dir}/pfstools
