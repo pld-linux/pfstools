@@ -1,27 +1,31 @@
 #
 # TODO:
-# - jpeg-hdr
+# - jpeghdr
+# - gdal
+# - octave
 # - split progs package by libraries required
 #
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
-Version:	1.6.2
+Version:	1.8.5
 Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
-# Source0-md5:	6c39c0bfb72ff59787f4ed4396272297
+# Source0-md5:	80dac70bfb6359a6749453477e74b112
 URL:		http://pfstools.sourceforge.net/
-BuildRequires:	ImageMagick-c++-devel
-BuildRequires:	OpenEXR-devel
+BuildRequires:	ImageMagick-c++-devel >= 6.0
+BuildRequires:	OpenEXR-devel >= 1.0
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
+BuildRequires:	QtGui-devel >= 4
 BuildRequires:	autoconf >= 2.59-9
 BuildRequires:	automake
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool >= 2:1.4d
+BuildRequires:	libtool >= 2:2.0
 BuildRequires:	netpbm-devel
-BuildRequires:	qt-devel
+BuildRequires:	qt4-build >= 4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -84,6 +88,7 @@ Pakiet zawiera narzędzia pfstools.
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 
 %configure \
@@ -98,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libpfs-1.2.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -123,5 +131,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
-%{_mandir}/man1/*
+%attr(755,root,root) %{_bindir}/pfs*
+%{_datadir}/pfstools
+%{_mandir}/man1/pfs*.1*
