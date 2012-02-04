@@ -12,6 +12,7 @@ License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
 # Source0-md5:	80dac70bfb6359a6749453477e74b112
+Patch0:		%{name}-opt.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
 BuildRequires:	OpenEXR-devel >= 1.0
@@ -99,6 +100,7 @@ Wiązania języka Octave do pfstools.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__libtoolize}
