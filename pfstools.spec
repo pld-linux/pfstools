@@ -6,14 +6,13 @@
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
-Version:	1.8.5
-Release:	10
+Version:	1.9.1
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
-# Source0-md5:	80dac70bfb6359a6749453477e74b112
+# Source0-md5:	f6f5966e248fd6979e6339725ea19c99
 Patch0:		%{name}-opt.patch
-Patch1:		format-security.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
 BuildRequires:	OpenEXR-devel >= 1.0
@@ -102,7 +101,6 @@ Wiązania języka Octave do pfstools.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
