@@ -1,0 +1,28 @@
+--- pfstools-1.9.1/configure.ac~	2014-11-10 22:14:16.000000000 +0100
++++ pfstools-1.9.1/configure.ac	2014-11-10 23:55:31.223091067 +0100
+@@ -449,6 +449,7 @@
+   [AC_DEFINE( HAVE_LIBGDAL,1,
+ 	      [Define this if you have the GDAL library])
+ 	      GDAL_LIBS="-lgdal"
++	      GDAL_CFLAGS="-I/usr/include/gdal"
+               gdal_support="yes"],[gdal_support="no"],)
+ else
+   gdal_support="no"
+@@ -508,6 +509,7 @@
+ AC_SUBST(IMAGEMAGICK_CFLAGS)
+ AC_SUBST(JPEGHDR_LIBS)
+ AC_SUBST(GDAL_LIBS)
++AC_SUBST(GDAL_CFLAGS)
+ AC_SUBST(QT_LIBS)
+ AC_SUBST(QT_CFLAGS)
+ AC_SUBST(GL_LIBS)
+--- pfstools-1.9.1/src/fileformat/Makefile.am~	2014-11-06 13:50:48.000000000 +0100
++++ pfstools-1.9.1/src/fileformat/Makefile.am	2014-11-10 23:56:27.736422407 +0100
+@@ -97,6 +97,7 @@
+ if GDAL_SUPPORT
+ pfsingdal_SOURCES = pfsingdal.cpp
+ pfsingdal_LDADD = $(GDAL_LIBS)
++INCLUDES += $(GDAL_CFLAGS)
+ endif
+ 
+ pfsinrgbe_SOURCES = pfsinrgbe.cpp rgbeio.cpp rgbeio.h

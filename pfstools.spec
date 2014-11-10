@@ -13,6 +13,7 @@ Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
 # Source0-md5:	f6f5966e248fd6979e6339725ea19c99
 Patch0:		%{name}-opt.patch
+Patch1:		%{name}-gdal.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
 BuildRequires:	OpenEXR-devel >= 1.0
@@ -101,6 +102,7 @@ Wiązania języka Octave do pfstools.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
