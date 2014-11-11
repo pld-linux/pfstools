@@ -1,0 +1,10 @@
+--- pfstools-1.9.1/src/pfs/pfs.pc.in~	2014-06-27 12:02:38.000000000 +0200
++++ pfstools-1.9.1/src/pfs/pfs.pc.in	2014-11-11 11:08:37.771834233 +0100
+@@ -7,5 +7,5 @@
+ Description: Library for manipulating pfs image format
+ Requires:
+ Version: @PACKAGE_VERSION@
+-Libs: -L${libdir} -lpfs
+-Cflags: -I${includedir}/pfs
++Libs: -L${libdir} -lpfs-1.2
++Cflags: -I${includedir}/pfs-1.2
