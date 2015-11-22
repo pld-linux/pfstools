@@ -6,14 +6,14 @@
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
-Version:	1.9.1
-Release:	4
+Version:	2.0.4
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tar.gz
-# Source0-md5:	f6f5966e248fd6979e6339725ea19c99
-Patch0:		%{name}-opt.patch
-Patch1:		%{name}-gdal.patch
+Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
+# Source0-md5:	f17e2834798cda75d32b2fcd11826d82
+Patch0:		pfstools-2.0.4-maptype.patch
+Patch1:		pfstools-2.0.4-octinstall.patch
 Patch2:		%{name}-pc.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
@@ -55,6 +55,7 @@ Summary:	Header files for pfstools
 Summary(pl.UTF-8):	Pliki nagłówkowe pfstools
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	pfstools-static
 
 %description devel
 The header files are only needed for development of programs using the
@@ -63,18 +64,6 @@ pfstools.
 %description devel -l pl.UTF-8
 W pakiecie tym znajdują się pliki nagłówkowe, przeznaczone dla
 programistów używających bibliotek pfstools.
-
-%package static
-Summary:	Static pfstools libraries
-Summary(pl.UTF-8):	Biblioteki statyczne pfstools
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static pfstools libraries.
-
-%description static -l pl.UTF-8
-Biblioteki statyczne pfstools.
 
 %package progs
 Summary:	pfstools utility programs
@@ -107,26 +96,20 @@ Wiązania języka Octave do pfstools.
 %patch2 -p1
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-
-%configure \
-	--disable-matlab \
-	%{?debug:--enable-debug}
-
+install -d build
+cd build
+%cmake ../
 %{__make}
+
+cd ../doc
+pdflatex pfs_format_spec.tex
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
+cd build
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libpfs-1.2.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -137,24 +120,22 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README TODO doc/faq.txt doc/pfs_format_spec.pdf
-%attr(755,root,root) %{_libdir}/libpfs-1.2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpfs-1.2.so.0
+%attr(755,root,root) %{_libdir}/libpfs.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libpfs.so.2
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libpfs-1.2.so
+%attr(755,root,root) %{_libdir}/libpfs.so
 %{_pkgconfigdir}/pfs.pc
-%{_includedir}/pfs-1.2
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libpfs-1.2.a
+%{_includedir}/pfs
 
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pfs*
+%attr(755,root,root) %{_bindir}/*2hdrgen
 %{_datadir}/pfstools
 %{_mandir}/man1/pfs*.1*
+%{_mandir}/man1/*2hdrgen.1*
 
 %files -n octave-pfstools
 %defattr(644,root,root,755)
