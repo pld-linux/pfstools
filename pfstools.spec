@@ -7,7 +7,7 @@ Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
 Version:	2.0.4
-Release:	5
+Release:	6
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
@@ -28,6 +28,7 @@ BuildRequires:	libtool >= 2:2.0
 BuildRequires:	netpbm-devel
 BuildRequires:	octave-devel
 BuildRequires:	qt4-build >= 4
+BuildRequires:	texlive-format-pdflatex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		octave_m_dir	%(octave-config --m-site-dir)
@@ -98,7 +99,9 @@ Wiązania języka Octave do pfstools.
 %build
 install -d build
 cd build
-%cmake ../
+%cmake \
+	-DWITH_OpenCV=OFF \
+	../
 %{__make}
 
 cd ../doc
