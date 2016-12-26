@@ -1,0 +1,46 @@
+diff -ur pfstools-2.0.4/src/fileformat/pfsinimgmagick.cpp pfstools-2.0.4-im7/src/fileformat/pfsinimgmagick.cpp
+--- pfstools-2.0.4/src/fileformat/pfsinimgmagick.cpp	2015-07-15 11:58:19.000000000 +0200
++++ pfstools-2.0.4-im7/src/fileformat/pfsinimgmagick.cpp	2016-12-26 23:03:33.929300971 +0100
+@@ -35,6 +35,7 @@
+ 
+ #define PROG_NAME "pfsinimgmagick"
+ 
++using namespace Magick;
+ 
+ class QuietException 
+ {
+@@ -112,7 +113,7 @@
+     Magick::Image imImage( ff.fileName );
+ 
+     VERBOSE_STR << "input image gamma:  " << imImage.gamma() << std::endl;
+-    bool hasAlpha = imImage.matte();
++    bool hasAlpha = imImage.alpha();
+     if( hasAlpha )
+       VERBOSE_STR << "alpha channel found" << std::endl;    
+     
+@@ -127,18 +128,19 @@
+     
+     // Copy line by line to pfs::Frame
+     int pixInd = 0;
+-    const float maxValue = (float)(1<<QuantumDepth) - 1;
++    const float maxValue = (float)QuantumRange;
+     for( int r = 0; r < imImage.rows(); r++ ) {
+-      const Magick::PixelPacket *pixels =
++      const Magick::Quantum *pixels =
+         imImage.getConstPixels( 0, r, imImage.columns(), 1 );
+ 
+       for( int c = 0; c < imImage.columns(); c++ ) {
+-        (*X)(pixInd) = (float)pixels[c].red / maxValue;
+-        (*Y)(pixInd) = (float)pixels[c].green / maxValue;
+-        (*Z)(pixInd) = (float)pixels[c].blue / maxValue;
++        (*X)(pixInd) = (float)MagickCore::GetPixelRed(imImage.image(), pixels) / maxValue;
++        (*Y)(pixInd) = (float)MagickCore::GetPixelGreen(imImage.image(), pixels) / maxValue;
++        (*Z)(pixInd) = (float)MagickCore::GetPixelBlue(imImage.image(), pixels) / maxValue;
+         if( alpha != NULL )
+-          (*alpha)(pixInd) = (float)pixels[c].opacity / maxValue;
++          (*alpha)(pixInd) = (float)MagickCore::GetPixelAlpha(imImage.image(), pixels) / maxValue;
+         pixInd++;
++	pixels += GetPixelChannels(imImage.image());
+       } 
+     }    
+ 
