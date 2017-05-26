@@ -7,7 +7,7 @@ Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
 Version:	2.0.4
-Release:	9
+Release:	10
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
