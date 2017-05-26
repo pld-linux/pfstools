@@ -6,15 +6,13 @@
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
-Version:	2.0.4
-Release:	10
+Version:	2.0.6
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
-# Source0-md5:	f17e2834798cda75d32b2fcd11826d82
-Patch0:		pfstools-2.0.4-maptype.patch
-Patch1:		pfstools-2.0.4-octinstall.patch
-Patch2:		imagemagick7.patch
+# Source0-md5:	c3148ed11e562c30a0fd65d114cf2de2
+Patch0:		imagemagick7.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
 BuildRequires:	OpenEXR-devel >= 1.0
@@ -95,8 +93,6 @@ Wiązania języka Octave do pfstools.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 install -d build
@@ -124,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README TODO doc/faq.txt doc/pfs_format_spec.pdf
+%doc AUTHORS ChangeLog README doc/faq.txt doc/pfs_format_spec.pdf
 %attr(755,root,root) %{_libdir}/libpfs.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libpfs.so.2
 
