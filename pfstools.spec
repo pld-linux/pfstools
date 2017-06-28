@@ -1,13 +1,13 @@
 #
 # TODO:
-# - jpeghdr (libjpeghdr doesn't seem to be freely available; was attached to some book?)
+# - jpeghdr (libjpeghdr doesn't seem to be freely available; was attached to some book?); not supported by CMakeLists
 # - split progs package by libraries required
 #
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
 Version:	2.0.6
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
@@ -19,13 +19,19 @@ BuildRequires:	OpenEXR-devel >= 1.0
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
 BuildRequires:	QtGui-devel >= 4
-BuildRequires:	autoconf >= 2.59-9
-BuildRequires:	automake
-BuildRequires:	gdal-devel
+BuildRequires:	cmake >= 2.8.8
+BuildRequires:	fftw3-devel >= 3
+BuildRequires:	fftw3-single-devel >= 3
+# pfsingdal not supported in CMakeLists
+#BuildRequires:	gdal-devel
+BuildRequires:	gsl-devel
+BuildRequires:	libexif-devel
+BuildRequires:	libgomp-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool >= 2:2.0
 BuildRequires:	netpbm-devel
 BuildRequires:	octave-devel
+BuildRequires:	opencv-devel
+BuildRequires:	perl-base
 BuildRequires:	qt4-build >= 4
 BuildRequires:	texlive-format-pdflatex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
