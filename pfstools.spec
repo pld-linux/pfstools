@@ -6,19 +6,19 @@
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
-Version:	2.0.6
-Release:	4
+Version:	2.1.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
-# Source0-md5:	c3148ed11e562c30a0fd65d114cf2de2
+# Source0-md5:	ed5197268b60f1b3432981d1fcea152f
 Patch0:		imagemagick7.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
 BuildRequires:	OpenEXR-devel >= 1.0
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
-BuildRequires:	QtGui-devel >= 4
+BuildRequires:	Qt5Widgets-devel >= 5
 BuildRequires:	cmake >= 2.8.8
 BuildRequires:	fftw3-devel >= 3
 BuildRequires:	fftw3-single-devel >= 3
@@ -32,7 +32,7 @@ BuildRequires:	netpbm-devel
 BuildRequires:	octave-devel
 BuildRequires:	opencv-devel
 BuildRequires:	perl-base
-BuildRequires:	qt4-build >= 4
+BuildRequires:	qt5-build >= 5
 BuildRequires:	texlive-format-pdflatex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
