@@ -60,7 +60,7 @@ Summary:	Header files for pfstools
 Summary(pl.UTF-8):	Pliki nagłówkowe pfstools
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	pfstools-static
+Obsoletes:	pfstools-static < 2
 
 %description devel
 The header files are only needed for development of programs using the
@@ -75,8 +75,8 @@ Summary:	pfstools utility programs
 Summary(pl.UTF-8):	Narzędzia pfstools
 Group:		Applications/Graphics
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	pfscalibration
-Obsoletes:	pfstmo
+Obsoletes:	pfscalibration < 2
+Obsoletes:	pfstmo < 2
 
 %description progs
 This package contains pfstools utility programs.
