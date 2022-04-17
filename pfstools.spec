@@ -1,18 +1,21 @@
-#
 # TODO:
 # - jpeghdr (libjpeghdr doesn't seem to be freely available; was attached to some book?); not supported by CMakeLists
 # - split progs package by libraries required
 #
+# Conditional build:
+%bcond_with	opencv	# pfsalign utility (using OpenCV)
+
 Summary:	pfstools for High Dynamic Range Images and Video
 Summary(pl.UTF-8):	Narzędzia do obrazów i wideo o dużym zakresie luminancji
 Name:		pfstools
 Version:	2.2.0
-Release:	3
+Release:	4
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/pfstools/%{name}-%{version}.tgz
 # Source0-md5:	8f026213e567bc72dd23253ced5417a4
 Patch0:		imagemagick7.patch
+Patch1:		%{name}-glut.patch
 URL:		http://pfstools.sourceforge.net/
 BuildRequires:	ImageMagick-c++-devel >= 6.0
 BuildRequires:	OpenEXR-devel >= 1.0
@@ -27,11 +30,13 @@ BuildRequires:	fftw3-single-devel >= 3
 BuildRequires:	gsl-devel
 BuildRequires:	libexif-devel
 BuildRequires:	libgomp-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtiff-devel
 BuildRequires:	netpbm-devel
 BuildRequires:	octave-devel
-BuildRequires:	opencv-devel
+%{?with_opencv:BuildRequires:	opencv-devel}
 BuildRequires:	perl-base
+BuildRequires:	pkgconfig
 BuildRequires:	qt5-build >= 5
 BuildRequires:	texlive-format-pdflatex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -99,14 +104,15 @@ Wiązania języka Octave do pfstools.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 install -d build
 cd build
 export CXXFLAGS="%{rpmcxxflags} -std=c++11"
-%cmake \
-	-DWITH_OpenCV=OFF \
-	../
+%cmake .. \
+	%{!?with_opencv:-DWITH_OpenCV=OFF}
+
 %{__make}
 
 cd ../doc
@@ -115,8 +121,7 @@ pdflatex pfs_format_spec.tex
 %install
 rm -rf $RPM_BUILD_ROOT
 
-cd build
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean

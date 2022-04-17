@@ -1,0 +1,12 @@
+Workaround some cmake 3.2x (free)glut library detection breakage (it refers to GLUT_glut_LIBRARY, but never defines it)
+--- pfstools-2.2.0/src/pfsglview/CMakeLists.txt.orig	2021-08-12 11:36:12.000000000 +0200
++++ pfstools-2.2.0/src/pfsglview/CMakeLists.txt	2022-04-17 21:08:09.744383018 +0200
+@@ -12,7 +12,7 @@ endif()
+ add_executable(pfsglview pfsglview.cpp picture_io.cpp module.cpp m_histogram.cpp m_status.cpp m_on_screen_display.cpp)
+ 
+ # TODO: Use ${GLUT_LIBRARY} instead.
+-target_link_libraries(pfsglview ${OPENGL_LIBRARIES} ${GLUT_glut_LIBRARY} pfs)
++target_link_libraries(pfsglview ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLUT_glut_LIBRARY} pfs)
+ 
+ install (TARGETS pfsglview DESTINATION bin)
+ install (FILES pfsglview.1 DESTINATION ${MAN_DIR})
